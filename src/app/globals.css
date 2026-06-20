@@ -64,18 +64,46 @@ body::after {
 .font-cormorant { font-family: "Cormorant Garamond", serif; }
 
 /* Brand assets */
+.site-header-row {
+  display: grid;
+  grid-template-columns: clamp(128px, 11vw, 168px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(22px, 2.2vw, 42px);
+  height: 72px;
+}
+.site-logo-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-decoration: none;
+}
 .site-logo-header {
   display: block;
-  width: clamp(168px, 13vw, 230px);
+  width: 100%;
+  max-height: 42px;
   height: auto;
+  object-fit: contain;
 }
 .site-logo-footer {
   display: block;
   width: min(100%, 240px);
   height: auto;
 }
+.site-desktop-nav {
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(11px, 1.2vw, 22px);
+  min-width: 0;
+}
 @media (max-width: 480px) {
-  .site-logo-header { width: 160px; }
+  .site-header-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .site-logo-link { width: 152px; }
   .site-logo-footer { width: 220px; }
 }
 

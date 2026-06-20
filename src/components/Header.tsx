@@ -48,9 +48,9 @@ export default function Header() {
         }}
       >
         <div className="container-site">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "72px", gap: "28px" }}>
+          <div className="site-header-row">
             {/* Logo */}
-            <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
+            <Link href="/" className="site-logo-link" aria-label="Maison Reflet Bordeaux - accueil">
               <Image
                 src="/brand/maison-reflet-logo-dark.webp"
                 alt="Maison Reflet Bordeaux"
@@ -62,7 +62,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex" style={{ alignItems: "center", justifyContent: "flex-end", gap: "clamp(14px,1.55vw,26px)", flex: 1, minWidth: 0 }}>
+            <nav className="hidden lg:flex site-desktop-nav">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
