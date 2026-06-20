@@ -1,26 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap");
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --noir: #111111;
+  --creme: #faf7f2;
+  --champagne: #d8c3a5;
+  --dore: #b8975a;
+  --gris: #8a8178;
+  --gris-clair: #c4bdb8;
+  --noir-soft: #1c1c1c;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--creme);
+  color: var(--noir);
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Keyframes */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Grain texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 1;
+  mix-blend-mode: overlay;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--creme); }
+::-webkit-scrollbar-thumb { background: var(--champagne); }
+
+/* Selection */
+::selection { background: var(--dore); color: var(--creme); }
+
+/* Fonts */
+.font-cormorant { font-family: "Cormorant Garamond", serif; }
+
+/* Brand assets */
+.site-logo-header {
+  display: block;
+  width: clamp(168px, 13vw, 230px);
+  height: auto;
+}
+.site-logo-footer {
+  display: block;
+  width: min(100%, 240px);
+  height: auto;
+}
+@media (max-width: 480px) {
+  .site-logo-header { width: 160px; }
+  .site-logo-footer { width: 220px; }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+body.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+body.reveal-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--noir); color: var(--creme);
+  padding: 15px 36px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid var(--noir); transition: all 0.3s ease; text-decoration: none;
+}
+.btn-primary:hover { background: transparent; color: var(--noir); }
+
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--dore); color: #fff;
+  padding: 15px 36px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid var(--dore); transition: all 0.3s ease; text-decoration: none;
+}
+.btn-gold:hover { background: transparent; color: var(--dore); }
+
+.btn-outline-light {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent; color: var(--creme);
+  padding: 15px 36px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid rgba(250,247,242,0.5); transition: all 0.3s ease; text-decoration: none;
+}
+.btn-outline-light:hover { background: var(--creme); color: var(--noir); border-color: var(--creme); }
+
+.btn-outline-dark {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent; color: var(--noir);
+  padding: 15px 36px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid var(--noir); transition: all 0.3s ease; text-decoration: none;
+}
+.btn-outline-dark:hover { background: var(--noir); color: var(--creme); }
+
+/* Card hover */
+.card-hover {
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 64px rgba(17,17,17,0.1);
+}
+
+/* Gold accent line */
+.gold-line {
+  display: block; width: 40px; height: 1px; background: var(--dore);
+}
+
+/* Section spacing */
+.section-padding { padding: 96px 0; }
+@media (max-width: 768px) { .section-padding { padding: 64px 0; } }
+
+/* Container */
+.container-site { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 768px) { .container-site { padding: 0 48px; } }
+@media (min-width: 1280px) { .container-site { padding: 0 80px; } }
+
+/* Dark section */
+.section-dark { background: var(--noir); color: var(--creme); }
+
+/* Prestation card */
+.prestation-card {
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+.prestation-card:hover { border-color: var(--champagne); }
+
+/* Image overlay */
+.img-overlay {
+  position: relative; overflow: hidden;
+}
+.img-overlay::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(17,17,17,0.6) 100%);
+}
+
+/* Number decoration */
+.big-number {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 300;
+  color: var(--champagne);
+  line-height: 1;
+  opacity: 0.3;
+  user-select: none;
+}
+
+/* Mobile sticky CTA */
+.sticky-cta {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 24px; background: var(--noir);
+  display: none;
+}
+@media (max-width: 768px) { .sticky-cta { display: block; } }
+
+/* Table styles */
+.tarif-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tarif-table { width: 100%; border-collapse: collapse; }
+.tarif-table th, .tarif-table td {
+  padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid rgba(216,195,165,0.2);
+  font-size: 0.88rem;
+}
+@media (min-width: 640px) {
+  .tarif-table th, .tarif-table td { padding: 14px 20px; font-size: 0.9rem; }
+}
+.tarif-table th {
+  font-family: "DM Sans", sans-serif; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.68rem;
+  color: var(--gris);
+}
+.tarif-table tr:hover td { background: rgba(216,195,165,0.05); }
+.tarif-table .price {
+  color: var(--dore); font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem; font-weight: 500; text-align: right; white-space: nowrap;
+}
+/* Hide duration column on small screens */
+@media (max-width: 540px) {
+  .tarif-table .col-duree { display: none; }
+}
+
+/* Gallery grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+}
+@media (min-width: 1024px) {
+  .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+}
+
+/* Avis */
+.avis-card {
+  background: white; border: 1px solid rgba(216,195,165,0.3);
+  padding: 32px; position: relative;
+}
+.avis-card::before {
+  content: "\201C";
+  font-family: "Cormorant Garamond", serif;
+  font-size: 5rem; color: var(--dore); opacity: 0.2;
+  position: absolute; top: 8px; left: 20px; line-height: 1;
+}
+
+/* Star */
+.stars { color: var(--dore); letter-spacing: 2px; font-size: 0.9rem; }
+
+/* Form */
+.form-input {
+  width: 100%; padding: 14px 16px;
+  background: transparent; border: 1px solid var(--champagne);
+  color: var(--noir); font-family: "DM Sans", sans-serif; font-size: 0.9rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input:focus { border-color: var(--dore); }
+.form-input::placeholder { color: var(--gris); }
+.form-label {
+  display: block; font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris);
+  margin-bottom: 8px;
 }
